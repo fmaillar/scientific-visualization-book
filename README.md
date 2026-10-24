@@ -38,6 +38,41 @@ If you don't want to spend money, you can simply [nominate me](https://stars.git
 - [Article](https://labdmitriy.github.io/blog/building-scientific-visualization-book/)  
 - [Script](scripts/build_book/ubuntu.sh)
 
+### GNU Info edition (Emacs)
+
+The book can also be built as a GNU Info manual, including PNG versions of its
+figures, without changing the original PDF build process.
+
+On Debian/Ubuntu, install the required tools:
+
+```sh
+sudo apt install python3 make pandoc texinfo poppler-utils
+```
+
+Build and install the manual for the current user:
+
+```sh
+make info
+make install-info
+```
+
+The installation defaults to `~/.local/share/info/scientific-visualization/`.
+The generated Info file references images in a companion `images/` directory;
+keep both together when copying the manual.
+
+For Emacs, ensure `~/.local/share/info/` is on `Info-directory-list`, then
+open the Info directory with `C-h i`:
+
+```elisp
+(with-eval-after-load 'info
+  (add-to-list 'Info-directory-list
+               (expand-file-name "~/.local/share/info/")))
+```
+
+Run `make clean-info` to remove generated files or `make uninstall-info` to
+remove the local installation. GNU Info conversion is independent of the
+existing LaTeX/PDF targets.
+
 ### See also
 
 * [Python & OpenGL for Scientific Visualization](https://www.labri.fr/perso/nrougier/python-opengl/)
